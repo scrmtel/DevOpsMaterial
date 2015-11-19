@@ -1,0 +1,63 @@
+http://www.javacreed.com/why-should-we-use-maven/
+Rhel - 52.33.171.216
+http://ec2-52-33-171-216.us-west-2.compute.amazonaws.com:8080/jenkins/
+http://www.davidghedini.com/pg/entry/install_tomcat_8_on_centos  --> installing tomcat
+
+Setting up tomcat java and jenkins
+1.create a separate folder
+2.copy Tomcat binary files (tar xvzf apache-tomcat-8.gz)
+3.copy JDK binary files (tar xvzf jdk-8u65-linux-x64.gz)
+4.set the user names in tomcat-users.xml
+/home/loki/tc/apache-tomcat-8.0.28/conf/
+<role rolename="admin"/>
+<role rolename="admin-gui"/>
+<role rolename="admin-script"/>
+<role rolename="manager"/>
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<user name="admin" password="adminadmin" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status" />
+<user name="loki" password="loki" roles="admin,manager,admin-gui,admin-script,manager-gui,manager-script,manager-jmx,manager-status" />
+5. Need to set java_home like below, if you want to set these permanentely then need put it .bashrc profile
+JAVA_HOME=/home/loki/java/jdk1.8.0_65
+export JAVA_HOME
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+
+6. If you want to restart tomcat whenever the server is rebooted then need to create a file under /etc/init.d and follow the instructions.
+--vi /etc/init.d/tomcat
+--Copy following content, check with catalina_home once if it is changed.
+#!/bin/bash  
+# description: Tomcat Start Stop Restart  
+# processname: tomcat  
+# chkconfig: 234 20 80  
+JAVA_HOME=/home/loki/java/jdk1.8.0_65
+export JAVA_HOME
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+CATALINA_HOME=/home/loki/tc/apache-tomcat-8.0.28  
+  
+case $1 in  
+start)  
+sh $CATALINA_HOME/bin/startup.sh  
+;;   
+stop)     
+sh $CATALINA_HOME/bin/shutdown.sh  
+;;   
+restart)  
+sh $CATALINA_HOME/bin/shutdown.sh  
+sh $CATALINA_HOME/bin/startup.sh  
+;;   
+esac      
+exit 0  
+
+--change permissions of the file chmod 755 tomcat
+--To set up the config to run in every rebot run these commands 
+chkconfig --add tomcat 
+chkconfig --level 234 tomcat on 
+chkconfig --list tomcat 
+6. service tomcat restart
+7. Review the catalina.out file for errors.
+8.Manage Memory Usage Using JAVA_OPTS.  Add this line into catalina.sh
+ JAVA_OPTS="-Xms128m -Xmx128m"
