@@ -3,6 +3,12 @@ Rhel - 52.33.171.216
 http://ec2-52-33-171-216.us-west-2.compute.amazonaws.com:8080/jenkins/
 http://www.davidghedini.com/pg/entry/install_tomcat_8_on_centos  --> installing tomcat
 
+Keep your putty session alive:
+Create a keepmealive.sh file with following content, save and run
+#/bin/sh
+while clear ;echo "I'm alive, press Ctrl+C to get shell back" ; do sleep 10 ; done
+
+
 Setting up tomcat java and jenkins
 1.create a separate folder
 2.copy Tomcat binary files (tar xvzf apache-tomcat-8.gz)
