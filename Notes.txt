@@ -3,11 +3,22 @@ Rhel - 52.33.171.216
 http://ec2-52-33-171-216.us-west-2.compute.amazonaws.com:8080/jenkins/
 http://www.davidghedini.com/pg/entry/install_tomcat_8_on_centos  --> installing tomcat
 
++++++++++++++++++++
 Keep your putty session alive:
 Create a keepmealive.sh file with following content, save and run
 #/bin/sh
 while clear ;echo "I'm alive, press Ctrl+C to get shell back" ; do sleep 10 ; done
++++++++++++++++++++
 
++++++++++++++++++
+# useradd -ou 0 -g 0 loki  --> creating a user with root privileges
+# passwd loki --> assigning the pwd
++++++++++++++++++
+
++++++++++++++++++++
+Command to download file from net
+curl -o /home/loki/config.ru https://github.com/puppetlabs/puppet/blob/master/ext/rack/config.r
++++++++++++++++++++
 
 Setting up tomcat java and jenkins
 1.create a separate folder
